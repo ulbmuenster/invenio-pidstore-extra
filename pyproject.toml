@@ -1,0 +1,97 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2025 University of Münster.
+#
+# invenio-pidstore-extra is free software; you can redistribute it and/or
+# modify it under the terms of the MIT License; see LICENSE file for more
+# details.
+
+[build-system]
+requires = ["hatchling", "babel>=2.16.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "invenio_pidstore_extra/__init__.py"
+
+[tool.hatch.metadata]
+readme = { paths = ["README.rst", "CHANGES.rst"], content-type = "text/x-rst" }
+
+[tool.hatch.build]
+include = ["invenio_pidstore_extra/**/*"]
+
+[project]
+name = "invenio_pidstore_extra"
+dynamic = ["version", "readme"]
+description = "Module that adds URN minting by DNB epicur service."
+keywords = ["invenio", "rdm", "urn", "dnb"]
+license = { text = "MIT" }
+authors = [{ name = "University of Münster", email = "forschungsdaten@uni-muenster.de" }]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "License :: OSI Approved :: MIT License",
+]
+urls = { Homepage = "https://github.com/ulbmuenster/invenio-pidstore-extra" }
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.1.0",
+    "idutils>=1.4.2",
+    "invenio-pidstore>=2.0.0",
+    "invenio-rdm-records>=17.0.2",
+]
+
+[project.optional-dependencies]
+tests = [
+    "pytest-black-ng>=0.4.0",
+    "invenio-app>=1.4.0,<2.0.0",
+    "pytest-invenio>=2.1.0,<3.0.0",
+    "sphinx>=4.5.0",
+]
+
+# Entry points
+[project.entry-points."invenio_base.apps"]
+invenio_pidstore_extra = "invenio_pidstore_extra:InvenioUrnProvider"
+
+[project.entry-points."invenio_i18n.translations"]
+invenio_pidstore_extra = "invenio_pidstore_extra"
+
+[tool.pydocstyle]
+add-ignore = ["D401", "D403"]
+
+[tool.isort]
+profile = "black"
+
+[tool.check-manifest]
+ignore = ["*-requirements.txt"]
+
+[tool.pytest.ini_options]
+addopts = """
+--black --isort --pydocstyle --doctest-glob='*.rst' --doctest-modules
+--cov=invenio_pidstore_extra --cov-report=term-missing
+"""
+testpaths = ["docs", "tests", "invenio_pidstore_extra"]
+
+[tool.babel]
+copyright_holder = "University of Münster"
+msgid_bugs_address = "forschungsdaten@uni-muenster.de"
+
+[tool.babel.compile_catalog]
+directory = "invenio_pidstore_extra/translations/"
+use_fuzzy = true
+
+[tool.babel.extract_messages]
+mapping_file = "babel.ini"
+output_file = "invenio_pidstore_extra/translations/messages.pot"
+add_comments = "NOTE"
+
+[tool.babel.init_catalog]
+input_file = "invenio_pidstore_extra/translations/messages.pot"
+output_dir = "invenio_pidstore_extra/translations/"
+
+[tool.babel.update_catalog]
+input_file = "invenio_pidstore_extra/translations/messages.pot"
+output_dir = "invenio_pidstore_extra/translations/"
+
+[tool.build_sphinx]
+source-dir = "docs/"
+build-dir = "docs/_build"
+all_files = true
