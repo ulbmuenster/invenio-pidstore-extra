@@ -20,7 +20,7 @@ PIDSTORE_EXTRA_DNB_USERNAME = "username"
 PIDSTORE_EXTRA_DNB_PASSWORD = "password"
 """The corresponding password."""
 
-PIDSTORE_EXTRA_DNB_ID_PREFIX = "urn:nbn::dnb:provider:"
+PIDSTORE_EXTRA_DNB_ID_PREFIX = "urn:nbn:dnb:provider:"
 """Just an example! Please replace by prefix provided by DNB."""
 
 PIDSTORE_EXTRA_FORMAT = "{prefix}-{id}"

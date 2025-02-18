@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2024 University of Münster.
+# Copyright (C) 2024-2025 University of Münster.
 #
 # invenio-urn-provider is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -14,7 +14,12 @@
 #  pip install -e .[all]
 #  check-manifest -u
 
-include .dockerignore
-include .editorconfig
-include .tx/config
-recursive-include invenio_urn_provider/translations *.po *.pot *.mo
+# added by check-manifest
+include *.in
+include *.rst
+include *.sh
+include *.txt
+include *.yml
+include babel.ini
+recursive-include tests *.ini
+recursive-include tests *.py

@@ -26,8 +26,8 @@
 [main]
 host = https://www.transifex.com
 
-[invenio.invenio-urn-provider-messages]
-file_filter = invenio_urn_provider/translations/<lang>/LC_MESSAGES/messages.po
-source_file = invenio_urn_provider/translations/messages.pot
+[invenio.invenio-pidstore-extra-messages]
+file_filter = invenio_pidstore_extra/translations/<lang>/LC_MESSAGES/messages.po
+source_file = invenio_pidstore_extra/translations/messages.pot
 source_lang = en
 type = PO

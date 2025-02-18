@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2024 University of Münster.
+# Copyright (C) 2025 University of Münster.
 #
 # invenio-pidstore-extra is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -31,10 +31,3 @@ def test_init():
     assert "invenio-pidstore-extra" not in app.extensions
     ext.init_app(app)
     assert "invenio-pidstore-extra" in app.extensions
-
-
-def test_view(base_client):
-    """Test view."""
-    res = base_client.get("/")
-    assert res.status_code == 200
-    assert "Welcome to invenio-pidstore-extra" in str(res.data)

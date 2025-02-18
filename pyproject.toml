@@ -31,7 +31,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
 ]
 urls = { Homepage = "https://github.com/ulbmuenster/invenio-pidstore-extra" }
-requires-python = ">=3.12"
+requires-python = ">=3.9"
 dependencies = [
     "flask>=3.1.0",
     "idutils>=1.4.2",
@@ -42,8 +42,9 @@ dependencies = [
 [project.optional-dependencies]
 tests = [
     "pytest-black-ng>=0.4.0",
-    "invenio-app>=1.4.0,<2.0.0",
-    "pytest-invenio>=2.1.0,<3.0.0",
+    "pytest-env==1.1.5",
+    "invenio-app>=2.0.0",
+    "pytest-invenio>=3.0.0",
     "sphinx>=4.5.0",
 ]
 
