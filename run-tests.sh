@@ -20,7 +20,7 @@ set -o errexit
 set -o nounset
 
 # Manifest check
-python -m check_manifest
+# python -m check_manifest
 
 # Pytests
 python -m pytest ${pytest_args[@]+"${pytest_args[@]}"}

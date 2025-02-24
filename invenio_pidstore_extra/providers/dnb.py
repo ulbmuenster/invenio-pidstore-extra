@@ -14,7 +14,8 @@ from flask import current_app
 from invenio_pidstore.models import PIDStatus
 from invenio_rdm_records.services.pids.providers import PIDProvider
 from invenio_rdm_records.utils import ChainObject
-from urn import DNBURNServiceError, DNBUrnServiceRESTClient
+
+from .urn import DNBURNServiceError, DNBUrnServiceRESTClient
 
 
 class DNBUrnClient:

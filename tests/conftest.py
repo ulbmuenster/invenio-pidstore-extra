@@ -47,7 +47,7 @@ def app(base_app, request):
     return base_app
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture()
 def client(app):
     """Create an API client."""
     client = DNBUrnServiceRESTClient(
