@@ -37,14 +37,13 @@ dependencies = [
     "idutils>=1.4.2",
     "invenio-pidstore>=2.0.0",
     "invenio-rdm-records>=17.0.2",
-    "invenio-search==3.0.0",
-    "opensearch-dsl==2.1.0",
-    "pytest-black-ng==0.4.1",
+    "invenio-search>=3.0.0",
+    "opensearch-dsl>=2.1.0",
 ]
 
 [project.optional-dependencies]
 tests = [
-    "pytest-black-ng>=0.4.0",
+    "pytest-black-ng>=0.4.1",
     "pytest-env==1.1.5",
     "invenio-app>=2.0.0",
     "pytest-invenio>=3.0.0",

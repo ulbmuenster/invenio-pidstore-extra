@@ -13,6 +13,7 @@ https://wiki.dnb.de/display/URNSERVDOK/URN-Service+API.
 """
 
 import json
+from urllib.parse import urljoin
 
 import requests
 from idutils.normalizers import normalize_urn
@@ -114,32 +115,31 @@ class DNBUrnServiceRESTClient(object):
             "content-type": "application/json",
             "accept": "application/json",
         }
-        body = data
         request = self._create_request()
-        resp = request.post("urns", body=json.dumps(body), headers=headers)
-        if resp.status_code == HTTP_CREATED:
-            return normalize_urn(resp.json()["urn"])
+        response = request.post("urns", body=json.dumps(data), headers=headers)
+        if response.status_code == HTTP_CREATED:
+            return normalize_urn(response.json()["urn"])
         else:
-            raise DNBURNServiceError.factory(resp.status_code, resp.text)
+            raise DNBURNServiceError.factory(response.status_code, response.text)
 
     def patch_urn(self, urn, data):
         """Patch a new JSON payload to DNB."""
         headers = {"content-type": "application/json"}
-        body = data
         request = self._create_request()
-        resp = request.patch("urns/urn/" + urn, body=json.dumps(body), headers=headers)
-        if resp.status_code == HTTP_NO_CONTENT:
+        response = request.patch(
+            "urns/urn/" + urn, body=json.dumps(data), headers=headers
+        )
+        if response.status_code == HTTP_NO_CONTENT:
             return ""
         else:
-            raise DNBURNServiceError.factory(resp.status_code, resp.text)
+            raise DNBURNServiceError.factory(response.status_code, response.text)
 
     def patch_urls(self, urn, data):
         """Patch a new JSON payload to patch the URL's at DNB."""
         headers = {"content-type": "application/json"}
-        body = data
         request = self._create_request()
         resp = request.patch(
-            "urns/urn/" + urn + "/my-urls", body=json.dumps(body), headers=headers
+            "urns/urn/" + urn + "/my-urls", body=json.dumps(data), headers=headers
         )
         if resp.status_code == HTTP_NO_CONTENT:
             return ""
@@ -184,6 +184,12 @@ class DNBUrnServiceRESTClient(object):
 
     def create_successor(self, urn, successor):
         """Set a successor urn."""
-        data = {"successor": self.api_url + "urns/urn/" + successor}
+        data = {"successor": urljoin(self.api_url, "urns/urn/" + successor)}
+
+        return self.patch_urn(urn, data)
+
+    def remove_successor(self, urn):
+        """Set a successor urn."""
+        data = {"successor": None}
 
         return self.patch_urn(urn, data)
