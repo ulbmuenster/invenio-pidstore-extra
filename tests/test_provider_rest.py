@@ -137,4 +137,7 @@ def test_provider_rest_remove_successor(mock_patch, dnb_rest_client):
     """Test REST check_is_registered."""
     mock_patch.return_value.status_code = 204
     response = dnb_rest_client.remove_successor("urn:nbn:de:hbz:6-xyz")
+    mock_patch.return_value.json.return_value = {
+        "successor": None,
+    }
     assert response == ""

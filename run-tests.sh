@@ -23,6 +23,6 @@ set -o nounset
 # python -m check_manifest
 
 # Pytests
-python -m pytest ${pytest_args[@]+"${pytest_args[@]}"}
+python -m pytest
 tests_exit_code=$?
 exit "$tests_exit_code"
