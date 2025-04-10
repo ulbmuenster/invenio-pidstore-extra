@@ -7,3 +7,7 @@
 # details.
 
 """DNB wrapper."""
+
+from .pids import URNRelationsComponent
+
+__all__ = URNRelationsComponent

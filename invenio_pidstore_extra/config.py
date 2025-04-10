@@ -23,5 +23,8 @@ PIDSTORE_EXTRA_DNB_PASSWORD = "password"
 PIDSTORE_EXTRA_DNB_ID_PREFIX = "urn:nbn:dnb:provider:"
 """Just an example! Please replace by prefix provided by DNB."""
 
+PIDSTORE_EXTRA_DNB_SANDBOX_URI = "https://api.nbn-resolving.org/sandbox/v2/"
+"""In case the sandbox is not available this setting allows configuration of a different URI."""
+
 PIDSTORE_EXTRA_FORMAT = "{prefix}-{id}"
 """The format of the URN."""

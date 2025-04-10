@@ -21,14 +21,23 @@ from .urn import DNBURNServiceError, DNBUrnServiceRESTClient
 class DNBUrnClient:
     """DNB Urn Client."""
 
-    def __init__(self, name, config_prefix=None, **kwargs):
+    def __init__(
+        self,
+        name,
+        prefix=None,
+        username=None,
+        password=None,
+        urn_format=None,
+        test_mode=True,
+        **kwargs,
+    ):
         """Constructor."""
         self.name = name
-        self._prefix = current_app.config.get("PIDSTORE_EXTRA_DNB_ID_PREFIX")
-        self._username = current_app.config.get("PIDSTORE_EXTRA_DNB_USERNAME")
-        self._password = current_app.config.get("PIDSTORE_EXTRA_DNB_PASSWORD")
-        self._urn_format = current_app.config.get("PIDSTORE_EXTRA_FORMAT")
-        self._test_mode = current_app.config.get("PIDSTORE_EXTRA_TEST_MODE", True)
+        self._prefix = prefix
+        self._username = username
+        self._password = password
+        self._urn_format = urn_format
+        self._test_mode = test_mode
         if not (
             self._prefix and self._username and self._password and self._urn_format
         ):
@@ -37,7 +46,6 @@ class DNBUrnClient:
                 f"set PIDSTORE_EXTRA_DNB_USERNAME, PIDSTORE_EXTRA_DNB_PASSWORD, "
                 f"PIDSTORE_EXTRA_FORMAT and PIDSTORE_EXTRA_DNB_ID_PREFIX in your configuration."
             )
-            current_app.logger.error(message)
             raise RuntimeError(message)
         self._api = None
 

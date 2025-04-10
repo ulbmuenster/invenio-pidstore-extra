@@ -19,6 +19,11 @@ readme = { paths = ["README.rst", "CHANGES.rst"], content-type = "text/x-rst" }
 [tool.hatch.build]
 include = ["invenio_pidstore_extra/**/*"]
 
+[[tool.uv.index]]
+name = "gitlab"
+url = "https://zivgitlab.uni-muenster.de/api/v4/groups/12961/packages/pypi/"
+publish-url = "https://zivgitlab.uni-muenster.de/api/v4/groups/12961/packages/pypi/"
+
 [project]
 name = "invenio_pidstore_extra"
 dynamic = ["version", "readme"]
@@ -34,6 +39,7 @@ urls = { Homepage = "https://github.com/ulbmuenster/invenio-pidstore-extra" }
 requires-python = ">=3.9"
 dependencies = [
     "flask>=3.1.0",
+    "arrow>=1.3.0",
     "idutils>=1.4.2",
     "invenio-pidstore>=2.0.0",
     "invenio-rdm-records>=17.0.2",

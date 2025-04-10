@@ -7,3 +7,8 @@
 # details.
 
 """URN providers."""
+
+
+from .dnb import DNBUrnClient, DnbUrnProvider
+
+__all__ = (DNBUrnClient, DnbUrnProvider)

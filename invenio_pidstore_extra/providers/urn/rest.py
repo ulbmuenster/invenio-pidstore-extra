@@ -16,6 +16,7 @@ import json
 from urllib.parse import urljoin
 
 import requests
+from flask import current_app
 from idutils.normalizers import normalize_urn
 
 from .errors import DNBURNServiceError, DNBURNServiceUserNotAuthorizedError
@@ -47,7 +48,7 @@ class DNBUrnServiceRESTClient(object):
         self.prefix = str(prefix)
 
         if test_mode:
-            self.api_url = "https://api.nbn-resolving.org/sandbox/v2/"
+            self.api_url = current_app.config.get("PIDSTORE_EXTRA_DNB_SANDBOX_URI")
         else:
             self.api_url = url or "https://api.nbn-resolving.org/v2/"
 

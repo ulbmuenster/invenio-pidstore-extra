@@ -1,7 +1,7 @@
 ..
-    Copyright (C) 2024 University of Münster.
+    Copyright (C) 2025 University of Münster.
 
-    invenio-urn-provider is free software; you can redistribute it and/or
+    invenio-pidstore-extra is free software; you can redistribute it and/or
     modify it under the terms of the MIT License; see LICENSE file for more
     details.
 

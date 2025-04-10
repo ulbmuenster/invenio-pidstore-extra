@@ -7,7 +7,6 @@
 # details.
 
 """Tests for DNB wrapper."""
-import json
 from unittest.mock import patch
 
 import pytest

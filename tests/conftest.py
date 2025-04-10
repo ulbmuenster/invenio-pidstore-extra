@@ -17,7 +17,9 @@ import tempfile
 
 import pytest
 from flask import Flask
+from invenio_i18n import lazy_gettext as _
 
+import invenio_pidstore_extra.providers as providers
 from invenio_pidstore_extra.providers.urn import DNBUrnServiceRESTClient
 
 
@@ -36,6 +38,21 @@ def base_app():
         PIDSTORE_EXTRA_FORMAT="{prefix}-{id}",
         PIDSTORE_EXTRA_TEST_MODE=True,
         PIDSTORE_EXTRA_DNB_ENABLED=True,
+        RDM_PERSISTENT_IDENTIFIER_PROVIDERS=[
+            providers.DnbUrnProvider(
+                "urn",
+                client=providers.DNBUrnClient("dnb"),
+                label=_("URN"),
+            ),
+        ],
+        RDM_PERSISTENT_IDENTIFIERS={
+            "urn": {
+                "providers": ["urn"],
+                "required": True,
+                "label": _("URN"),
+                "is_enabled": providers.DnbUrnProvider.is_enabled,
+            },
+        },
     )
 
     return app_
