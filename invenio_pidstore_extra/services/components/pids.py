@@ -15,6 +15,7 @@ from invenio_drafts_resources.services.records.components import ServiceComponen
 
 
 def set_urn_forwarding(siblings, deleted, service):
+    """Apply the urn-forwarding to the given URN's."""
     sorted_siblings = collections.OrderedDict(sorted(siblings.items()))
     sorted_deleted = collections.OrderedDict(sorted(deleted.items()))
 

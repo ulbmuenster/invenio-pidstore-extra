@@ -32,6 +32,7 @@ def base_app():
     prefix = os.environ["PIDSTORE_EXTRA_DNB_ID_PREFIX"]
     app_ = Flask("testapp", instance_path=instance_path)
     app_.config.update(
+        PIDSTORE_EXTRA_DNB_SANDBOX_URI="http://localhost:8000/",
         PIDSTORE_EXTRA_DNB_USERNAME=username,
         PIDSTORE_EXTRA_DNB_PASSWORD=password,
         PIDSTORE_EXTRA_DNB_ID_PREFIX=prefix,
@@ -41,7 +42,9 @@ def base_app():
         RDM_PERSISTENT_IDENTIFIER_PROVIDERS=[
             providers.DnbUrnProvider(
                 "urn",
-                client=providers.DNBUrnClient("dnb"),
+                client=providers.DNBUrnClient(
+                    "dnb", prefix, username, password, "{prefix}-{id}"
+                ),
                 label=_("URN"),
             ),
         ],

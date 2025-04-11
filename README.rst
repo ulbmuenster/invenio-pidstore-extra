@@ -11,10 +11,16 @@
 
 Module that adds URN minting by DNB epicur service.
 
-InvenioRDM supports DOI minting with Datacite out of the box. This module adds support for URN minting by using the URN API published by German National Library (DNB).
+InvenioRDM supports DOI minting with Datacite out of the box. This module adds support for URN minting by using the
+URN API published by German National Library (DNB).
 
 Configuration
 =============
+
+After adding the module to your InvenioRDM instance you need to add the following snippet to your `invenio.cfg`.
+Make sure you have registered at the DNB and set the config variables below to the correct values!
+
+When putting this to production, set `PIDSTORE_EXTRA_TEST_MODE = False`!
 
 .. code-block:: python
 

@@ -1,3 +1,13 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2025 University of Münster.
+#
+# invenio-pidstore-extra is free software; you can redistribute it and/or
+# modify it under the terms of the MIT License; see LICENSE file for more
+# details.
+
+"""Simple implementation of DNB URN API."""
+
 import base64
 import random
 
@@ -10,6 +20,7 @@ namespace = "urn:nbn:de:hbz:6-"
 
 @app.route("/namespaces/name/<name>", methods=["GET"])
 def namespace_info(name: str):
+    """Implementation of namespaces API."""
     now = arrow.utcnow().isoformat()
     return jsonify(
         {
@@ -30,7 +41,7 @@ def namespace_info(name: str):
 
 @app.route("/namespaces/name/<name>/urn-suggestion", methods=["GET"])
 def suggest(name: str):
-    now = arrow.utcnow().isoformat()
+    """Implementation of suggest API."""
     return jsonify(
         {
             "suggestedUrn": name + str(random.randrange(1000000000, 9999999999, 1)),
@@ -42,6 +53,7 @@ def suggest(name: str):
 
 @app.route("/urns", methods=["POST"])
 def register():
+    """Implementation of URN registration API."""
     now = arrow.utcnow().isoformat()
     content = request.json
     return (
@@ -63,6 +75,7 @@ def register():
 
 @app.route("/urns/urn/<urn>", methods=["HEAD"])
 def check_existence(urn: str):
+    """Implementation of check for existence API."""
     if urn.startswith(namespace):
         suffix = urn[len(namespace) :]
         if int(suffix) < 5000000000:
@@ -72,6 +85,7 @@ def check_existence(urn: str):
 
 @app.route("/urns/urn/<urn>", methods=["GET"])
 def get_urn(urn: str):
+    """Implementation of get URN API."""
     if urn.startswith(namespace):
         suffix = urn[len(namespace) :]
         if int(suffix) < 5000000000:
@@ -93,16 +107,19 @@ def get_urn(urn: str):
 
 @app.route("/urns/urn/<urn>/urls", methods=["GET"])
 def get_url(urn: str):
+    """Implementation of get URL API."""
     return get_urls(urn, "/urls")
 
 
 @app.route("/urns/urn/<urn>/my-urls", methods=["GET"])
 def get_my_url(urn: str):
+    """Implementation of get my URL API."""
     return get_urls(urn, "/my-urls")
 
 
 @app.route("/urns/urn/<urn>/urls/base64/<encoded>", methods=["GET"])
 def get_single_url(urn: str, encoded: str):
+    """Implementation of get single URL API."""
     now = arrow.utcnow().isoformat()
     return jsonify(
         {
@@ -119,6 +136,7 @@ def get_single_url(urn: str, encoded: str):
 
 @app.route("/urns/urn/<urn>/urls", methods=["POST"])
 def add_url(urn: str):
+    """Implementation of add URL API."""
     now = arrow.utcnow().isoformat()
     content = request.json
     return jsonify(
@@ -138,21 +156,24 @@ def add_url(urn: str):
 
 @app.route("/urns/urn/<urn>/urls/base64/<encoded>", methods=["DELETE"])
 def remove_url(urn: str, encoded: str):
+    """Implementation of remove URL API."""
     return "", 204
 
 
 @app.route("/urns/urn/<urn>/my-urls", methods=["PATCH"])
 def add_my_url(urn: str):
+    """Implementation of add my URL API."""
     return "", 204
 
 
 @app.route("/urns/urn/<urn>", methods=["PATCH"])
 def set_successor(urn: str):
-    print(request.json)
+    """Implementation of set successor  API."""
     return "", 204
 
 
 def get_urls(urn: str, query: str):
+    """Helper method."""
     if urn.startswith(namespace):
         suffix = urn[len(namespace) :]
         if int(suffix) < 5000000000:
