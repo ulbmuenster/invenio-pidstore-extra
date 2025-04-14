@@ -1,4 +1,4 @@
 include:
   - project: 'ULB/dd-wi/inveniordm/automatization-templating/pipeline-templates'
     ref: main
-    file: 'modul-gitlab-ci.yml'
+    file: 'package-gitlab-ci.yml'
