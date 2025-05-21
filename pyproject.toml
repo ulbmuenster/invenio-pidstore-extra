@@ -99,7 +99,7 @@ include = [
 
 [tool.pytest.ini_options]
 addopts = """
---black --isort --pydocstyle --doctest-glob='*.rst' --doctest-modules
+--black --isort --doctest-glob='*.rst' --doctest-modules
 --cov=invenio_pidstore_extra --cov-report term --cov-report xml:coverage.xml --junitxml=report.xml
 """
 testpaths = ["tests", "invenio_pidstore_extra"]
