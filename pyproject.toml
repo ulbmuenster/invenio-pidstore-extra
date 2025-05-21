@@ -21,7 +21,7 @@ include = ["invenio_pidstore_extra/**/*"]
 
 [[tool.uv.index]]
 name = "gitlab"
-url = "https://zivgitlab.uni-muenster.de/api/v4/groups/12961/packages/pypi/"
+url = "https://zivgitlab.uni-muenster.de/api/v4/groups/12961/-/packages/pypi/simple"
 publish-url = "https://zivgitlab.uni-muenster.de/api/v4/groups/12961/packages/pypi/"
 
 [project]
@@ -32,11 +32,11 @@ keywords = ["invenio", "rdm", "urn", "dnb"]
 license = { text = "MIT" }
 authors = [{ name = "University of Münster", email = "forschungsdaten@uni-muenster.de" }]
 classifiers = [
-    "Development Status :: 1 - Planning",
+    "Development Status :: 4 - Beta",
     "License :: OSI Approved :: MIT License",
 ]
 urls = { Homepage = "https://github.com/ulbmuenster/invenio-pidstore-extra" }
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 dependencies = [
     "flask>=3.1.0",
     "arrow>=1.3.0",
@@ -49,11 +49,17 @@ dependencies = [
 
 [project.optional-dependencies]
 tests = [
-    "pytest-black-ng>=0.4.1",
+    "check-manifest",
+    "pytest==8.3.5",
+    "invenio-app>=2.1.0",
+    "pytest-black-ng>=0.4.0",
+    "pytest-cov==6.1.1",
+    "pytest-docstyle==2.0.1",
     "pytest-env==1.1.5",
-    "invenio-app>=2.0.0",
-    "pytest-invenio>=3.0.0",
-    "sphinx>=4.5.0",
+    "pytest-invenio>=3.3.0",
+    "pytest-isort==4.0.0",
+    "pytest-mock>=3.12.0",
+    "Sphinx>=4.5.0",
 ]
 
 # Entry points
@@ -61,7 +67,7 @@ tests = [
 invenio_pidstore_extra = "invenio_pidstore_extra:InvenioUrnProvider"
 
 [project.entry-points."invenio_i18n.translations"]
-invenio_pidstore_extra = "invenio_pidstore_extra"
+messages = "invenio_pidstore_extra"
 
 [tool.pydocstyle]
 add-ignore = ["D401", "D403"]
@@ -70,14 +76,33 @@ add-ignore = ["D401", "D403"]
 profile = "black"
 
 [tool.check-manifest]
-ignore = ["*-requirements.txt"]
+ignore = [
+    "*-requirements.txt",
+    "requirements-*.txt",
+    ".editorconfig",
+    ".dockerignore",
+    ".tx/config",
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "*.in",
+    "*.ini",
+    "*.rst",
+    "*.sh",
+    "*.yml",
+    "babel.ini",
+    "invenio_pidstore_extra/**/*.py",
+    "invenio_pidstore_extra/**/*.html",
+    "tests/*.py",
+]
 
 [tool.pytest.ini_options]
 addopts = """
 --black --isort --pydocstyle --doctest-glob='*.rst' --doctest-modules
 --cov=invenio_pidstore_extra --cov-report term --cov-report xml:coverage.xml --junitxml=report.xml
 """
-testpaths = ["docs", "tests", "invenio_pidstore_extra"]
+testpaths = ["tests", "invenio_pidstore_extra"]
 env = """
     D:PIDSTORE_EXTRA_DNB_USERNAME="username"
     D:PIDSTORE_EXTRA_DNB_PASSWORD="password"
