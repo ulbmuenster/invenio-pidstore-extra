@@ -20,9 +20,9 @@ set -o errexit
 set -o nounset
 
 # Manifest check
-# python -m check_manifest
+uv run --all-extras check-manifest
 
 # Pytests
-python -m pytest
+uv run --all-extras pytest
 tests_exit_code=$?
 exit "$tests_exit_code"
