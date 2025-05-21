@@ -23,6 +23,8 @@ include = ["invenio_pidstore_extra/**/*"]
 name = "gitlab"
 url = "https://zivgitlab.uni-muenster.de/api/v4/groups/12961/-/packages/pypi/simple"
 publish-url = "https://zivgitlab.uni-muenster.de/api/v4/groups/12961/packages/pypi/"
+authenticate = "always"
+explicit = true
 
 [project]
 name = "invenio_pidstore_extra"
