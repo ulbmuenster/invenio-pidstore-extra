@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2025 University of Münster.
+# Copyright (C) 2025-2026 University of Münster.
 #
 # invenio-pidstore-extra is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -12,6 +12,9 @@ import collections
 import sys
 
 from invenio_drafts_resources.services.records.components import ServiceComponent
+from invenio_pidstore_extra.providers.urn.errors import (
+    DNBURNServiceUrnNotRegisteredError,
+)
 
 
 def set_urn_forwarding(siblings, deleted, service):
@@ -50,9 +53,13 @@ def set_urn_forwarding(siblings, deleted, service):
                     sibling_pids["urn"]["identifier"]
                     == newest_sibling_pids["urn"]["identifier"]
                 ):
-                    service.pids.pid_manager._get_provider(
-                        "urn", "urn"
-                    ).client.api.remove_successor(sibling_pids["urn"]["identifier"])
+                    try:
+                        service.pids.pid_manager._get_provider(
+                            "urn", "urn"
+                        ).client.api.remove_successor(sibling_pids["urn"]["identifier"])
+                    except DNBURNServiceUrnNotRegisteredError:
+                        # No need to handle this error, as it means the URN is not registered
+                        pass
                 else:
                     service.pids.pid_manager._get_provider(
                         "urn", "urn"

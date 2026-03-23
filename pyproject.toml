@@ -7,7 +7,7 @@
 # details.
 
 [build-system]
-requires = ["hatchling", "babel>=2.16.0"]
+requires = ["hatchling==1.26.3", "babel>=2.16.0"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
@@ -24,6 +24,12 @@ name = "gitlab"
 url = "https://zivgitlab.uni-muenster.de/api/v4/groups/12961/-/packages/pypi/simple"
 publish-url = "https://zivgitlab.uni-muenster.de/api/v4/groups/12961/packages/pypi/"
 authenticate = "always"
+explicit = true
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
 explicit = true
 
 [project]
@@ -47,6 +53,7 @@ dependencies = [
     "invenio-rdm-records>=17.0.2",
     "invenio-search>=3.0.0",
     "opensearch-dsl>=2.1.0",
+    "black==26.3.1",
 ]
 
 [project.optional-dependencies]
