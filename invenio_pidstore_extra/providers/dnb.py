@@ -38,15 +38,6 @@ class DNBUrnClient:
         self._password = password
         self._urn_format = urn_format
         self._test_mode = test_mode
-        if not (
-            self._prefix and self._username and self._password and self._urn_format
-        ):
-            message = (
-                f"The {self.__class__.__name__} is misconfigured. Please "
-                f"set PIDSTORE_EXTRA_DNB_USERNAME, PIDSTORE_EXTRA_DNB_PASSWORD, "
-                f"PIDSTORE_EXTRA_FORMAT and PIDSTORE_EXTRA_DNB_ID_PREFIX in your configuration."
-            )
-            raise RuntimeError(message)
         self._api = None
 
     def generate_urn(self, record):
@@ -57,6 +48,14 @@ class DNBUrnClient:
     def api(self):
         """DNB URN Service API client instance."""
         if self._api is None:
+            if not (
+                self._prefix and self._username and self._password and self._urn_format
+            ):
+                raise RuntimeError(
+                    f"The {self.__class__.__name__} is misconfigured. Please "
+                    f"set PIDSTORE_EXTRA_DNB_USERNAME, PIDSTORE_EXTRA_DNB_PASSWORD, "
+                    f"PIDSTORE_EXTRA_FORMAT and PIDSTORE_EXTRA_DNB_ID_PREFIX in your configuration."
+                )
             self._api = DNBUrnServiceRESTClient(
                 self._username,
                 self._password,
@@ -96,6 +95,11 @@ class DnbUrnProvider(PIDProvider):
         """Determine if the pid is enabled or not."""
         return app.config.get("PIDSTORE_EXTRA_DNB_ENABLED")
 
+    @classmethod
+    def should_skip(cls, record):
+        """Return True to skip URN registration for this record. Override in subclasses."""
+        return False
+
     @staticmethod
     def _log_errors(errors):
         """Log errors from DNBURNServiceError class."""
@@ -122,6 +126,9 @@ class DnbUrnProvider(PIDProvider):
         :param record: the record metadata for the URN.
         :returns: `True` if is registered successfully.
         """
+        if self.__class__.should_skip(record):
+            return False
+
         if isinstance(record, ChainObject):
             if record._child["access"]["record"] == "restricted":
                 return False
